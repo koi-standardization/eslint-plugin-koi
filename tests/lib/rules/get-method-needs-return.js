@@ -25,6 +25,7 @@ ruleTester.run("test get-method-needs-return", rule, {
     {
       name: "body is empty",
       code: `function getName() {}`,
+      output: "function getName() {return}",
       errors: [
         {
           message: "getName must return a value",
@@ -33,11 +34,8 @@ ruleTester.run("test get-method-needs-return", rule, {
     },
     {
       name: "no return value",
-      code: `
-                function getName() {
-                    var name = 'syukinmei'
-                }
-            `,
+      code: `function getName() {var name = 'syukinmei';}`,
+      output: `function getName() {var name = 'syukinmei';return}`,
       errors: [
         {
           message: "getName must return a value",
